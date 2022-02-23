@@ -3,50 +3,35 @@ package miv_dev.study.presentation
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import miv_dev.study.data.RepositoryImpl
+import androidx.lifecycle.viewmodel.compose.viewModel
+import dagger.hilt.android.AndroidEntryPoint
+import miv_dev.study.presentation.screens.MainScreen
 import miv_dev.study.presentation.theme.StudyTheme
+import miv_dev.study.presentation.view_models.MainViewModel
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-
-//    private val repository by lazy {
-//        RepositoryImpl()
-//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val user = RepositoryImpl().getUser()?.uid ?: "No logged"
-        println(user)
         setContent {
             StudyTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
-                ) {
-                    Greeting(user)
-                }
+                MainScreen()
             }
         }
     }
 }
 
 @Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
+fun HomePage() {
+    val viewModel: MainViewModel = viewModel()
 
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    StudyTheme {
-        Greeting("Android")
+    Scaffold {
+        Text(text = viewModel.uiState.isLogged.toString())
     }
+
 }
