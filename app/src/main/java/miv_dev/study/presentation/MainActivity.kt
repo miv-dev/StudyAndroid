@@ -1,4 +1,4 @@
-package miv_dev.study
+package miv_dev.study.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -10,11 +10,20 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import miv_dev.study.ui.theme.StudyTheme
+import miv_dev.study.data.RepositoryImpl
+import miv_dev.study.presentation.theme.StudyTheme
 
 class MainActivity : ComponentActivity() {
+
+//    private val repository by lazy {
+//        RepositoryImpl()
+//    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val user = RepositoryImpl().getUser()?.uid ?: "No logged"
+        println(user)
         setContent {
             StudyTheme {
                 // A surface container using the 'background' color from the theme
@@ -22,7 +31,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    Greeting("Android")
+                    Greeting(user)
                 }
             }
         }

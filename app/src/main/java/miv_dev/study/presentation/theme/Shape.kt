@@ -1,4 +1,4 @@
-package miv_dev.study.ui.theme
+package miv_dev.study.presentation.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes
