@@ -1,14 +1,14 @@
 package miv_dev.study.data
 
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
+import miv_dev.study.data.network.AuthDataSources
 import miv_dev.study.domain.Repository
+import javax.inject.Inject
 
-class RepositoryImpl : Repository {
-    private var auth: FirebaseAuth = Firebase.auth
+class RepositoryImpl @Inject constructor(
+    private val authDataSources: AuthDataSources
+) : Repository {
 
-    override fun getUser(): FirebaseUser? = auth.currentUser
+    override fun getUser(): FirebaseUser? = authDataSources.getUser()
 
 }
