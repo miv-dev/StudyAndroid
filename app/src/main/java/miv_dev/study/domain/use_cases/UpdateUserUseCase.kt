@@ -1,10 +1,11 @@
 package miv_dev.study.domain.use_cases
 
 import miv_dev.study.domain.UserRepository
+import miv_dev.study.domain.entity.User
 import javax.inject.Inject
 
-class GetUserUseCase @Inject constructor(
+class UpdateUserUseCase @Inject constructor(
     private val userRepository: UserRepository
 ) {
-    operator fun invoke() = userRepository.user
+    suspend operator fun invoke(user: User) = userRepository.updateUser(user)
 }

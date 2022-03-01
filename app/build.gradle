@@ -4,7 +4,6 @@ plugins {
     id 'com.google.gms.google-services'
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
-
 }
 
 android {
@@ -54,6 +53,7 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:29.1.0')
     implementation 'com.google.firebase:firebase-auth-ktx:21.0.1'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.1.1'
+    implementation 'com.google.firebase:firebase-firestore-ktx'
 
 
     // MARK: - DI
@@ -66,6 +66,10 @@ dependencies {
 
     implementation "com.google.accompanist:accompanist-insets:0.22.0-rc"
 
+    // room
+    implementation "androidx.room:room-runtime:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
 
     implementation "androidx.compose.material:material-icons-extended:$compose_version"
     implementation 'androidx.core:core-ktx:1.7.0'
