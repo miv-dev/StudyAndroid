@@ -1,7 +1,5 @@
 package miv_dev.study.presentation.screens
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
@@ -11,21 +9,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.google.accompanist.insets.ProvideWindowInsets
-import miv_dev.study.R
 import miv_dev.study.presentation.view_models.LoadingState
 import miv_dev.study.presentation.view_models.UserViewModel
 
-
 @Composable
-fun LoginScreen(navController: NavController, viewModel: UserViewModel = hiltViewModel()) {
+fun RegisterScreen(navController: NavController, viewModel: UserViewModel = hiltViewModel()) {
 
 
     val formState = viewModel.formState
@@ -33,14 +27,14 @@ fun LoginScreen(navController: NavController, viewModel: UserViewModel = hiltVie
     LaunchedEffect(formState.loadingState) {
         if (formState.loadingState == LoadingState.Loaded) {
             viewModel.clearFormState()
-            navController.navigate("main")
+            navController.popBackStack(route = "main", inclusive = false)
         }
     }
 
     Scaffold(topBar = {
         TopAppBar(elevation = 0.dp,
             backgroundColor = Color.Transparent,
-            title = { Text("Login") },
+            title = { Text("Register") },
             navigationIcon = {
                 IconButton(onClick = { navController.popBackStack() }) {
                     Icon(
@@ -107,28 +101,21 @@ fun LoginScreen(navController: NavController, viewModel: UserViewModel = hiltVie
                             .align(Alignment.Start)
                     )
                 }
-                TextButton(onClick = {
-                    navController.navigate("register")
-                }, modifier = Modifier.align(Alignment.End)) {
-                    Text("Register")
-                }
-
                 Spacer(Modifier.weight(1f))
 
                 Button(
-                    onClick = { viewModel.login() },
+                    onClick = { viewModel.register() },
                     shape = MaterialTheme.shapes.small,
                     contentPadding = PaddingValues(horizontal = 80.dp, vertical = 12.dp)
                 ) {
-
                     if (formState.loadingState == LoadingState.Loading) {
                         CircularProgressIndicator(
                             color = MaterialTheme.colors.onPrimary,
                             modifier = Modifier.size(20.dp),
                             strokeWidth = 2.dp
                         )
-                    } else {
-                        Text("Login")
+                    }else{
+                        Text("Register")
                     }
                 }
                 Spacer(Modifier.weight(0.2f))
@@ -159,33 +146,4 @@ fun LoginScreen(navController: NavController, viewModel: UserViewModel = hiltVie
             }
         }
     }
-}
-
-
-@Composable
-fun SocialButton(onTap: () -> Unit, iconId: Int, color: Color) {
-
-    Box(modifier = Modifier
-        .background(color, shape = MaterialTheme.shapes.medium)
-        .requiredWidth(100.dp)
-        .height(56.dp)
-        .clip(MaterialTheme.shapes.large)
-        .clickable { onTap() }) {
-        Icon(
-            painter = painterResource(id = iconId),
-            contentDescription = "social",
-            modifier = Modifier
-                .align(
-                    Alignment.Center
-                )
-                .size(30.dp),
-            tint = MaterialTheme.colors.background
-        )
-    }
-}
-
-object SocialIcons {
-    const val Google = R.drawable.social_google
-    const val Windows = R.drawable.social_windows
-    const val Facebook = R.drawable.social_facebook
 }
